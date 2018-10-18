@@ -12,16 +12,18 @@
 		04797A6321786203003D0194 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04797A6121786203003D0194 /* Main.storyboard */; };
 		04797A6521786203003D0194 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04797A6421786203003D0194 /* Assets.xcassets */; };
 		04797A6821786203003D0194 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04797A6621786203003D0194 /* LaunchScreen.storyboard */; };
+		04797A70217880E7003D0194 /* banner_itcons_blanco_final.png in Resources */ = {isa = PBXBuildFile; fileRef = 04797A6F217880E7003D0194 /* banner_itcons_blanco_final.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		04797A5A21786203003D0194 /* TextFieldExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TextFieldExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		04797A5A21786203003D0194 /* ItCons.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ItCons.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04797A5D21786203003D0194 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04797A5F21786203003D0194 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		04797A6221786203003D0194 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		04797A6421786203003D0194 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		04797A6721786203003D0194 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		04797A6921786203003D0194 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		04797A6F217880E7003D0194 /* banner_itcons_blanco_final.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = banner_itcons_blanco_final.png; path = "../../../OneDrive/02 - ITCons/1- Desarrollos/01 - Partes de Trabajo - Desarrollo de producto/02 - Diseño y Maquetación/banner_itcons_blanco_final.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,7 +40,7 @@
 		04797A5121786203003D0194 = {
 			isa = PBXGroup;
 			children = (
-				04797A5C21786203003D0194 /* TextFieldExample */,
+				04797A5C21786203003D0194 /* itCons */,
 				04797A5B21786203003D0194 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -46,30 +48,31 @@
 		04797A5B21786203003D0194 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				04797A5A21786203003D0194 /* TextFieldExample.app */,
+				04797A5A21786203003D0194 /* ItCons.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		04797A5C21786203003D0194 /* TextFieldExample */ = {
+		04797A5C21786203003D0194 /* itCons */ = {
 			isa = PBXGroup;
 			children = (
 				04797A5D21786203003D0194 /* AppDelegate.swift */,
 				04797A5F21786203003D0194 /* ViewController.swift */,
 				04797A6121786203003D0194 /* Main.storyboard */,
+				04797A6F217880E7003D0194 /* banner_itcons_blanco_final.png */,
 				04797A6421786203003D0194 /* Assets.xcassets */,
 				04797A6621786203003D0194 /* LaunchScreen.storyboard */,
 				04797A6921786203003D0194 /* Info.plist */,
 			);
-			path = TextFieldExample;
+			path = itCons;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		04797A5921786203003D0194 /* TextFieldExample */ = {
+		04797A5921786203003D0194 /* ItCons */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 04797A6C21786203003D0194 /* Build configuration list for PBXNativeTarget "TextFieldExample" */;
+			buildConfigurationList = 04797A6C21786203003D0194 /* Build configuration list for PBXNativeTarget "ItCons" */;
 			buildPhases = (
 				04797A5621786203003D0194 /* Sources */,
 				04797A5721786203003D0194 /* Frameworks */,
@@ -79,9 +82,9 @@
 			);
 			dependencies = (
 			);
-			name = TextFieldExample;
+			name = ItCons;
 			productName = TextFieldExample;
-			productReference = 04797A5A21786203003D0194 /* TextFieldExample.app */;
+			productReference = 04797A5A21786203003D0194 /* ItCons.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -100,7 +103,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 04797A5521786203003D0194 /* Build configuration list for PBXProject "TextFieldExample" */;
+			buildConfigurationList = 04797A5521786203003D0194 /* Build configuration list for PBXProject "ItCons" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -113,7 +116,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				04797A5921786203003D0194 /* TextFieldExample */,
+				04797A5921786203003D0194 /* ItCons */,
 			);
 		};
 /* End PBXProject section */
@@ -124,6 +127,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				04797A6821786203003D0194 /* LaunchScreen.storyboard in Resources */,
+				04797A70217880E7003D0194 /* banner_itcons_blanco_final.png in Resources */,
 				04797A6521786203003D0194 /* Assets.xcassets in Resources */,
 				04797A6321786203003D0194 /* Main.storyboard in Resources */,
 			);
@@ -258,9 +262,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = TextFieldExample/Info.plist;
+				INFOPLIST_FILE = ItCons/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = es.itcons.TextFieldExample;
+				PRODUCT_BUNDLE_IDENTIFIER = es.itcons.ItCons;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -270,9 +274,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = TextFieldExample/Info.plist;
+				INFOPLIST_FILE = ItCons/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = es.itcons.TextFieldExample;
+				PRODUCT_BUNDLE_IDENTIFIER = es.itcons.ItCons;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -281,7 +285,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		04797A5521786203003D0194 /* Build configuration list for PBXProject "TextFieldExample" */ = {
+		04797A5521786203003D0194 /* Build configuration list for PBXProject "ItCons" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				04797A6A21786203003D0194 /* Debug */,
@@ -290,13 +294,14 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		04797A6C21786203003D0194 /* Build configuration list for PBXNativeTarget "TextFieldExample" */ = {
+		04797A6C21786203003D0194 /* Build configuration list for PBXNativeTarget "ItCons" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				04797A6D21786203003D0194 /* Debug */,
 				04797A6E21786203003D0194 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
