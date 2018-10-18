@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class ViewController: UIViewController {
     var clickCount = 0
@@ -42,6 +43,34 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
+    // With Alamofire
+    func fetchAllRooms() {
+        let params = [
+            "username": "foo",
+            "password": "123456"
+        ]
+        
+        Alamofire.request("https://postman-echo.com/get",
+                          method: .get,
+                          parameters: params,
+                          encoding: URLEncoding.default)
+            .validate()
+            .responseJSON { response in
+                guard response.result.isSuccess else {
+                    NSLog("Error while fetching remote rooms")
+                    return
+                }
+                
+                let value = response.result.value
+//                let value2 = JSON(value).stringValue
+//                NSLog("Response: \(value2)");
+                
+                
+        }
+    }
+
 
 
 }
