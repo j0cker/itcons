@@ -37,6 +37,8 @@ class ViewController: UIViewController {
         NSLog("Username: \(tfUserName.text!)");
         NSLog("Password: \(tfPassword.text!)");
         NSLog("URL: \(tfServerUrl.text!)");
+//        mockRequest()
+        mockRequest(credentials: [tfUserName.text!, tfPassword.text!])
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,11 +47,10 @@ class ViewController: UIViewController {
     }
     
     
-    // With Alamofire
-    func fetchAllRooms() {
+    func mockRequest(credentials: [String]) {
         let params = [
-            "username": "foo",
-            "password": "123456"
+            "_username": credentials[0],
+            "_password": credentials[1]
         ]
         
         Alamofire.request("https://postman-echo.com/get",
@@ -64,12 +65,37 @@ class ViewController: UIViewController {
                 }
                 
                 let value = response.result.value
-//                let value2 = JSON(value).stringValue
-//                NSLog("Response: \(value2)");
+                //                let value2 = JSON(value).stringValue
+                NSLog("Response: \(value)");
                 
                 
         }
     }
+    
+//    func mockRequest() {
+//        let params = [
+//            "username": "foo",
+//            "password": "123456"
+//        ]
+//        
+//        Alamofire.request("https://postman-echo.com/get",
+//                          method: .get,
+//                          parameters: params,
+//                          encoding: URLEncoding.default)
+//            .validate()
+//            .responseJSON { response in
+//                guard response.result.isSuccess else {
+//                    NSLog("Error while fetching remote rooms")
+//                    return
+//                }
+//                
+//                let value = response.result.value
+////                let value2 = JSON(value).stringValue
+//                NSLog("Response: \(value)");
+//                
+//                
+//        }
+//    }
 
 
 
