@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import Foundation
 
 class ViewController: UIViewController {
     var clickCount = 0
@@ -28,17 +29,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var btnLogin: UIButton!
 
     @IBAction func btnClick(sender: UIButton) {
-//        clickCount += 1
-        
-//        lblTitle.text = "Clicked \(clickCount) times"
-        username = tfUserName.text!
-        password = tfPassword.text!
-        url = tfServerUrl.text!
-        NSLog("Username: \(tfUserName.text!)");
-        NSLog("Password: \(tfPassword.text!)");
-        NSLog("URL: \(tfServerUrl.text!)");
-//        mockRequest()
-        mockRequest(credentials: [tfUserName.text!, tfPassword.text!])
+        cookieRequest(url: tfServerUrl.text!, credentials: [tfUserName.text!, tfPassword.text!])
     }
 
     override func didReceiveMemoryWarning() {
@@ -47,55 +38,39 @@ class ViewController: UIViewController {
     }
     
     
-    func mockRequest(credentials: [String]) {
+    func cookieRequest(url: String, credentials: [String]) {
         let params = [
             "_username": credentials[0],
             "_password": credentials[1]
         ]
         
-        Alamofire.request("https://postman-echo.com/get",
-                          method: .get,
+        Alamofire.request("https://\(url).itcons.es/admin/login_check",
+                          method: .post,
                           parameters: params,
                           encoding: URLEncoding.default)
-            .validate()
-            .responseJSON { response in
-                guard response.result.isSuccess else {
-                    NSLog("Error while fetching remote rooms")
-                    return
+            .responseData { (responseObject) -> Void in
+                
+                if let responseStatus = responseObject.response?.statusCode {
+                    if responseStatus != 200 {
+                        // TODO
+                        print("ERROR: Not valid URL")
+                    } else {
+                        if let data = responseObject.data {
+                            let json = String(data: data, encoding: String.Encoding.utf8)
+                            if ((json?.contains("Bad credentials"))! ||
+                                (json?.contains("Your session has timed out"))!){
+                                print("PHPSESSID: Bad credentials");
+                            } else {
+                                let cookie = HTTPCookieStorage.shared.cookies![0]
+                                print("PHPSESSID: \(cookie.value)")
+                            }
+                        }
+                    }
                 }
-                
-                let value = response.result.value
-                //                let value2 = JSON(value).stringValue
-                NSLog("Response: \(value)");
-                
-                
         }
+        
+        
     }
-    
-//    func mockRequest() {
-//        let params = [
-//            "username": "foo",
-//            "password": "123456"
-//        ]
-//        
-//        Alamofire.request("https://postman-echo.com/get",
-//                          method: .get,
-//                          parameters: params,
-//                          encoding: URLEncoding.default)
-//            .validate()
-//            .responseJSON { response in
-//                guard response.result.isSuccess else {
-//                    NSLog("Error while fetching remote rooms")
-//                    return
-//                }
-//                
-//                let value = response.result.value
-////                let value2 = JSON(value).stringValue
-//                NSLog("Response: \(value)");
-//                
-//                
-//        }
-//    }
 
 
 
