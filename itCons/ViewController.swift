@@ -16,13 +16,34 @@ class ViewController: UIViewController {
     var username: String = ""
     var password: String = ""
     var url: String = ""
-    var proto: String = "https"
+    var proto: String = "http"
+    var httpsMode: Bool = false
+    var container: UIView = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        let defaults = UserDefaults.standard
+        let serverContext = defaults.object(forKey:"ServerContext") as? String ?? String()
+        if (serverContext != nil && serverContext != "") {
+            ViewControllerUtils().showActivityIndicatorBackground(uiView: self.view, container: container)
+        }
         
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        // Check if user is logged
+        let defaults = UserDefaults.standard
+        let serverContext = defaults.object(forKey:"ServerContext") as? String ?? String()
+        if (serverContext != nil && serverContext != "") {
+            print("SERV1: \(serverContext)")
+            perform(#selector(showWebViewController), with: nil, afterDelay: 1)
+            
+        }
+    }
+    
+    
+    
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var tfUserName: UITextField!
     @IBOutlet weak var tfPassword: UITextField!
@@ -30,7 +51,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var btnLogin: UIButton!
     
     @IBAction func btnClick(sender: UIButton) {
-        ViewControllerUtils().showActivityIndicator(uiView: self.view)
+        ViewControllerUtils().showActivityIndicator(uiView: self.view, container: container)
         cookieRequest(url: tfServerUrl.text!, credentials: [tfUserName.text!, tfPassword.text!])
     }
     
@@ -63,14 +84,15 @@ class ViewController: UIViewController {
                             if let data = responseObject.data {
                                 let json = String(data: data, encoding: String.Encoding.utf8)
                                 if ((json?.contains("Bad credentials"))! ||
-                                    (json?.contains("Your session has timed out"))!){
+                                    (json?.contains("Your session has timed out"))! ||
+                                    (json?.contains("¿Has olvidado la contraseña?"))!){
                                     print("PHPSESSID: Bad credentials");
                                     self.retry(url: url, credentials: credentials)
                                 } else {
                                     let cookie = HTTPCookieStorage.shared.cookies![0]
                                     print("PHPSESSID: \(cookie.value)")
                                     self.showWebViewController(serverUrl: "\(self.proto)://\(url).itcons.es")
-                                    ViewControllerUtils().hideActivityIndicator(uiView: self.view)
+                                    ViewControllerUtils().hideActivityIndicator(uiView: self.container)
                                 }
                             }
                         }
@@ -78,7 +100,7 @@ class ViewController: UIViewController {
             }
             
         } else {
-            // TODO
+            // TODO show Bad Credentials Toast
             print("Empty fields")
         }
         
@@ -105,25 +127,39 @@ class ViewController: UIViewController {
                         if let data = responseObject.data {
                             let json = String(data: data, encoding: String.Encoding.utf8)
                             if ((json?.contains("Bad credentials"))! ||
-                                (json?.contains("Your session has timed out"))!){
+                                (json?.contains("Your session has timed out"))! ||
+                                (json?.contains("¿Has olvidado la contraseña?"))!){
                                 print("PHPSESSID: Bad credentials");
+                                if (!self.httpsMode) {
+                                    self.httpsMode = true
+                                    self.proto = "https"
+                                    self.cookieRequest(url: self.tfServerUrl.text!, credentials: [self.tfUserName.text!, self.tfPassword.text!])
+                                } else {
+                                    // TODO show Bad Credentials Toast
+                                    ViewControllerUtils().hideActivityIndicator(uiView: self.view)
+                                    self.proto = "http"
+                                    self.httpsMode = false
+                                    
+                                }
                             } else {
                                 let cookie = HTTPCookieStorage.shared.cookies![0]
                                 print("PHPSESSID: \(cookie.value)")
                                 self.showWebViewController(serverUrl: "\(self.proto)://\(url).itcons.es")
-                                ViewControllerUtils().hideActivityIndicator(uiView: self.view)
+                                ViewControllerUtils().hideActivityIndicator(uiView: self.container)
                             }
                         }
                     }
                 }
         }
-    
+        
     }
     
-    func showWebViewController(serverUrl : String) {
+    @objc func showWebViewController(serverUrl : String) {
         let viewController = UIStoryboard(name: "Main", bundle: nil)
             .instantiateViewController(withIdentifier: "WebViewController") as! WebViewController
-        viewController.serverUrl = serverUrl
+        if (serverUrl != nil && serverUrl != "") {
+            viewController.serverUrl = serverUrl
+        }
         self.present(viewController, animated: false, completion: nil)
     }
     

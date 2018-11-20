@@ -16,6 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        // クッキー取得
+        retrieveCookies()
         return true
     }
 
@@ -27,6 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        // クッキー保存
+        storeCookies()
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -39,7 +43,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        // クッキー保存
+        storeCookies()
     }
+    
+    
+    // UserDefaultにクッキーを保存するメソッド
+    private func storeCookies() {
+        // 現在保持されているクッキーを取り出します
+        guard let cookies = HTTPCookieStorage.shared.cookies else { return }
+        // UserDefaultsに保存できるデータ型に変換していきます
+        var cookieDictionary = [String : AnyObject]()
+        for cookie in cookies {
+            cookieDictionary[cookie.name] = cookie.properties as AnyObject?
+        }
+        // UserDefaultsに保存します
+        UserDefaults.standard.set(cookieDictionary, forKey: "cookie")
+    }
+    
+    // UserDefaultからクッキーを取得するメソッド
+    private func retrieveCookies() {
+        // UserDefaultsに保存してあるクッキー情報を取り出します。（この時はまだ[String : AnyObject]型）
+        guard let cookieDictionary = UserDefaults.standard.dictionary(forKey: "cookie") else { return }
+        // HTTPCookie型に変換していきます
+        for (_, cookieProperties) in cookieDictionary {
+            if let cookieProperties = cookieProperties as? [HTTPCookiePropertyKey : Any] {
+                if let cookie = HTTPCookie(properties: cookieProperties ) {
+                    // クッキーをメモリ内にセットします
+                    HTTPCookieStorage.shared.setCookie(cookie)
+                }
+            }
+        }
+    }
+
+    // ~以下省略~
+    
+    
+    
 
 
 }
