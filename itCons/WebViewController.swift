@@ -2,18 +2,25 @@
 //  WebViewController.swift
 //  ItCons
 //
-//  Created by MAC on 16/11/18.
+//  Created by MAC on 19/11/18.
 //  Copyright © 2018 MAC. All rights reserved.
 //
 
 import UIKit
 
 class WebViewController: UIViewController {
+    var serverUrl: String = ""
 
+    @IBOutlet weak var webView: UIWebView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+//        print(serverUrl)
+        let request = URLRequest(url: URL(string: serverUrl)!)
+        webView.loadRequest(request)
     }
 
     override func didReceiveMemoryWarning() {

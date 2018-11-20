@@ -7,16 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		040DF3A421A2D4D00075CBF9 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040DF3A321A2D4D00075CBF9 /* WebViewController.swift */; };
 		04797A5E21786203003D0194 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04797A5D21786203003D0194 /* AppDelegate.swift */; };
 		04797A6021786203003D0194 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04797A5F21786203003D0194 /* ViewController.swift */; };
 		04797A6321786203003D0194 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04797A6121786203003D0194 /* Main.storyboard */; };
 		04797A6521786203003D0194 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04797A6421786203003D0194 /* Assets.xcassets */; };
 		04797A6821786203003D0194 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04797A6621786203003D0194 /* LaunchScreen.storyboard */; };
 		04797A70217880E7003D0194 /* banner_itcons_blanco_final.png in Resources */ = {isa = PBXBuildFile; fileRef = 04797A6F217880E7003D0194 /* banner_itcons_blanco_final.png */; };
+		04BE73F621A3F22B00FD423E /* ViewControllerUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BE73F521A3F22B00FD423E /* ViewControllerUtils.swift */; };
 		2840DFEB335889854253281E /* Pods_ItCons.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EBD8820EB3F1DE2610BFC7B /* Pods_ItCons.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		040DF3A321A2D4D00075CBF9 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		04797A5A21786203003D0194 /* ItCons.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ItCons.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04797A5D21786203003D0194 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04797A5F21786203003D0194 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -25,6 +28,7 @@
 		04797A6721786203003D0194 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		04797A6921786203003D0194 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04797A6F217880E7003D0194 /* banner_itcons_blanco_final.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = banner_itcons_blanco_final.png; path = "../../../OneDrive/02 - ITCons/1- Desarrollos/01 - Partes de Trabajo - Desarrollo de producto/02 - Diseño y Maquetación/banner_itcons_blanco_final.png"; sourceTree = "<group>"; };
+		04BE73F521A3F22B00FD423E /* ViewControllerUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerUtils.swift; sourceTree = "<group>"; };
 		3D5169BF05D4A3C99D517CC7 /* Pods-ItCons.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItCons.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ItCons/Pods-ItCons.debug.xcconfig"; sourceTree = "<group>"; };
 		5EBD8820EB3F1DE2610BFC7B /* Pods_ItCons.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ItCons.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B50FF6F798B80D47F5F9B3D /* Pods-ItCons.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItCons.release.xcconfig"; path = "Pods/Target Support Files/Pods-ItCons/Pods-ItCons.release.xcconfig"; sourceTree = "<group>"; };
@@ -70,6 +74,8 @@
 				04797A6421786203003D0194 /* Assets.xcassets */,
 				04797A6621786203003D0194 /* LaunchScreen.storyboard */,
 				04797A6921786203003D0194 /* Info.plist */,
+				040DF3A321A2D4D00075CBF9 /* WebViewController.swift */,
+				04BE73F521A3F22B00FD423E /* ViewControllerUtils.swift */,
 			);
 			path = itCons;
 			sourceTree = "<group>";
@@ -205,7 +211,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04BE73F621A3F22B00FD423E /* ViewControllerUtils.swift in Sources */,
 				04797A6021786203003D0194 /* ViewController.swift in Sources */,
+				040DF3A421A2D4D00075CBF9 /* WebViewController.swift in Sources */,
 				04797A5E21786203003D0194 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

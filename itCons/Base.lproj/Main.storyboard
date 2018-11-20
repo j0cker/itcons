@@ -22,7 +22,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ql9-XR-oBT">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nombre de usuario" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fRn-bo-sBE">
@@ -92,6 +92,39 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="82.5" y="40.140845070422536"/>
+        </scene>
+        <!--Web View Controller-->
+        <scene sceneID="bxX-ek-MdS">
+            <objects>
+                <viewController storyboardIdentifier="WebViewController" id="jtz-aK-QYQ" customClass="WebViewController" customModule="ItCons" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="uyx-uS-uIp"/>
+                        <viewControllerLayoutGuide type="bottom" id="Cl8-wf-atn"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="M3b-Ai-DaM">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aOs-ZM-0ru">
+                                <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="aOs-ZM-0ru" firstAttribute="leading" secondItem="M3b-Ai-DaM" secondAttribute="leading" id="LOk-TR-uel"/>
+                            <constraint firstItem="Cl8-wf-atn" firstAttribute="top" secondItem="aOs-ZM-0ru" secondAttribute="bottom" id="dGf-Jp-EF9"/>
+                            <constraint firstItem="aOs-ZM-0ru" firstAttribute="top" secondItem="uyx-uS-uIp" secondAttribute="bottom" id="p5I-PQ-bZd"/>
+                            <constraint firstAttribute="trailing" secondItem="aOs-ZM-0ru" secondAttribute="trailing" id="wg5-wT-KiR"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="aOs-ZM-0ru" id="taZ-Ob-K7r"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XXz-qA-Zt3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1050" y="39.08450704225352"/>
         </scene>
     </scenes>
     <resources>
