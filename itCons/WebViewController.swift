@@ -98,6 +98,8 @@ class WebViewController: UIViewController, UIWebViewDelegate {
             let defaults = UserDefaults.standard
             defaults.set("", forKey: "ServerContext")
             self.showLoginViewController()
+        } else {
+            self.view.showToast(toastMessage: "Compruebe su conexión", duration: 1.5)
         }
     }
     

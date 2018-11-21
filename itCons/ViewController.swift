@@ -53,7 +53,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var btnLogin: UIButton!
     
     @IBAction func btnClick(sender: UIButton) {
-        ViewControllerUtils().showActivityIndicator(uiView: self.view, container: container)
         cookieRequest(url: tfServerUrl.text!, credentials: [tfUserName.text!, tfPassword.text!])
     }
     
@@ -72,6 +71,8 @@ class ViewController: UIViewController {
         
         if (!url.isEmpty && !credentials[0].isEmpty && !credentials[0].isEmpty) {
             
+            ViewControllerUtils().showActivityIndicator(uiView: self.view, container: container)
+            
             Alamofire.request("\(proto)://\(url).itcons.es/admin/login_check",
                 method: .post,
                 parameters: params,
@@ -82,6 +83,8 @@ class ViewController: UIViewController {
                         if responseStatus != 200 {
                             // TODO
                             print("ERROR: Not valid URL")
+                            ViewControllerUtils().hideActivityIndicator(uiView: self.container)
+                            self.view.showToast(toastMessage: "Subdominio erróneo", duration: 1.5)
                         } else {
                             if let data = responseObject.data {
                                 let json = String(data: data, encoding: String.Encoding.utf8)
@@ -104,6 +107,7 @@ class ViewController: UIViewController {
         } else {
             // TODO show Bad Credentials Toast
             print("Empty fields")
+            self.view.showToast(toastMessage: "Rellene todos los campos", duration: 1.5)
         }
         
         
@@ -125,6 +129,8 @@ class ViewController: UIViewController {
                     if responseStatus != 200 {
                         // TODO
                         print("ERROR: Not valid URL")
+                        ViewControllerUtils().hideActivityIndicator(uiView: self.container)
+                        self.view.showToast(toastMessage: "Subdominio erróneo", duration: 1.5)
                     } else {
                         if let data = responseObject.data {
                             let json = String(data: data, encoding: String.Encoding.utf8)
@@ -141,7 +147,7 @@ class ViewController: UIViewController {
                                     ViewControllerUtils().hideActivityIndicator(uiView: self.container)
                                     self.proto = "http"
                                     self.httpsMode = false
-                                    
+                                    self.view.showToast(toastMessage: "Credenciales erróneas", duration: 1.5)
                                 }
                             } else {
                                 let cookie = HTTPCookieStorage.shared.cookies![0]
