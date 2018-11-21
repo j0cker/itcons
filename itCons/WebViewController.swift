@@ -64,8 +64,16 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     
     func webViewDidFinishLoad(_ webView: UIWebView) {
         ViewControllerUtils().hideActivityIndicator(uiView: container)
-//        refreshControl.endRefreshing()
+        //        refreshControl.endRefreshing()
         print("WebView: LoadFinish")
+        let currentURL = self.webView.request?.mainDocumentURL?.absoluteString;
+        print("CURR_URL: \(currentURL)")
+        if (currentURL != nil && currentURL != "" && (currentURL?.contains("admin/login"))!) {
+            // Save URL value
+            let defaults = UserDefaults.standard
+            defaults.set("", forKey: "ServerContext")
+            self.showLoginViewController()
+        }
     }
     
     func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
@@ -83,12 +91,26 @@ class WebViewController: UIViewController, UIWebViewDelegate {
 //            webView.loadRequest(request)
 //        }
         print("WebView: didFailLoadWithError")
+        let currentURL = self.webView.request?.mainDocumentURL?.absoluteString;
+        print("CURR_URL: \(currentURL)")
+        if (currentURL != nil && currentURL != "" && (currentURL?.contains("admin/login"))!) {
+            // Save URL value
+            let defaults = UserDefaults.standard
+            defaults.set("", forKey: "ServerContext")
+            self.showLoginViewController()
+        }
     }
     
     // Refresh the WebView
     func refresh(sender:AnyObject) {
         refreshControl.endRefreshing()
         webView.reload()
+    }
+    
+    func showLoginViewController() {
+        let viewController = UIStoryboard(name: "Main", bundle: nil)
+            .instantiateViewController(withIdentifier: "ViewController") as! ViewController
+        self.present(viewController, animated: false, completion: nil)
     }
     
     

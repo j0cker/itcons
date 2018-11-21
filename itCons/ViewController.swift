@@ -136,7 +136,7 @@ class ViewController: UIViewController {
                                     self.cookieRequest(url: self.tfServerUrl.text!, credentials: [self.tfUserName.text!, self.tfPassword.text!])
                                 } else {
                                     // TODO show Bad Credentials Toast
-                                    ViewControllerUtils().hideActivityIndicator(uiView: self.view)
+                                    ViewControllerUtils().hideActivityIndicator(uiView: self.container)
                                     self.proto = "http"
                                     self.httpsMode = false
                                     
