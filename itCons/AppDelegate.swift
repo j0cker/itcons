@@ -14,11 +14,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+//    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+//        // Override point for customization after application launch.
+//        // クッキー取得
+//        retrieveCookies()
+//        return true
+//    }
+    
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         // クッキー取得
         retrieveCookies()
-        return true
+        return self.orientationLock
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -77,6 +83,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     // ~以下省略~
+    
+    
+    /// set orientations you want to be allowed in this property by default
+    var orientationLock = UIInterfaceOrientationMask.portrait
     
     
     

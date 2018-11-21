@@ -11,6 +11,7 @@ import UIKit
 class WebViewController: UIViewController, UIWebViewDelegate {
     var serverUrl: String = ""
     var container: UIView = UIView()
+    let refreshControl: UIRefreshControl = UIRefreshControl()
     
     @IBOutlet weak var webView: UIWebView!
     
@@ -33,6 +34,20 @@ class WebViewController: UIViewController, UIWebViewDelegate {
             webView.loadRequest(request)
         }
         
+        // Text (Pull to refresh) with format (Textcolor Black) for RefreshControl
+        refreshControl.attributedTitle = NSAttributedString(string: "Deslice para refrescar", attributes: [
+            NSForegroundColorAttributeName: UIColor.white
+            ])
+        
+        // #selector(refresh) = "refresh" function called
+        refreshControl.addTarget(self, action: #selector(refresh), for: UIControlEvents.valueChanged)
+        
+        // TintColor - Color of Activity Indicator
+        refreshControl.tintColor = UIColor.white
+        
+        // Add RefreshControl to WebView
+        webView.scrollView.addSubview(refreshControl)
+        
         
     }
     
@@ -49,23 +64,31 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     
     func webViewDidFinishLoad(_ webView: UIWebView) {
         ViewControllerUtils().hideActivityIndicator(uiView: container)
+//        refreshControl.endRefreshing()
         print("WebView: LoadFinish")
     }
     
     func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
         ViewControllerUtils().hideActivityIndicator(uiView: container)
-        if (serverUrl != nil && serverUrl != "") {
-            let request = URLRequest(url: URL(string: serverUrl)!)
-            webView.loadRequest(request)
-            // Save URL value
-            let defaults = UserDefaults.standard
-            defaults.set(serverUrl, forKey: "ServerContext")
-        } else if (UserDefaults.standard.object(forKey:"ServerContext") as? String ?? String() != nil) {
-            serverUrl = UserDefaults.standard.object(forKey:"ServerContext") as? String ?? String()
-            let request = URLRequest(url: URL(string: serverUrl)!)
-            webView.loadRequest(request)
-        }
+        refreshControl.endRefreshing()
+//        if (serverUrl != nil && serverUrl != "") {
+//            let request = URLRequest(url: URL(string: serverUrl)!)
+//            webView.loadRequest(request)
+//            // Save URL value
+//            let defaults = UserDefaults.standard
+//            defaults.set(serverUrl, forKey: "ServerContext")
+//        } else if (UserDefaults.standard.object(forKey:"ServerContext") as? String ?? String() != nil) {
+//            serverUrl = UserDefaults.standard.object(forKey:"ServerContext") as? String ?? String()
+//            let request = URLRequest(url: URL(string: serverUrl)!)
+//            webView.loadRequest(request)
+//        }
         print("WebView: didFailLoadWithError")
+    }
+    
+    // Refresh the WebView
+    func refresh(sender:AnyObject) {
+        refreshControl.endRefreshing()
+        webView.reload()
     }
     
     
