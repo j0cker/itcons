@@ -101,6 +101,15 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         }
     }
     
+    // Forbid external links
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        let requestURL = request.mainDocumentURL?.absoluteString;
+        if (!(requestURL?.contains(".itcons.es"))!) {
+            return false
+        }
+        return true
+    }
+    
     // Refresh the WebView
     func refresh(sender:AnyObject) {
         refreshControl.endRefreshing()

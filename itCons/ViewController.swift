@@ -16,7 +16,8 @@ class ViewController: UIViewController {
     var username: String = ""
     var password: String = ""
     var url: String = ""
-    var proto: String = "http"
+//    var proto: String = "http"
+    var proto: String = ""
     var httpsMode: Bool = false
     var container: UIView = UIView()
     
@@ -28,6 +29,7 @@ class ViewController: UIViewController {
         if (serverContext != nil && serverContext != "") {
             ViewControllerUtils().showActivityIndicatorBackground(uiView: self.view, container: container)
         }
+        self.proto = "http"
         
     }
     
