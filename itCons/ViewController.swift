@@ -33,6 +33,13 @@ class ViewController: UIViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        tfUserName.borderStyle = UITextBorderStyle.roundedRect
+        tfPassword.borderStyle = UITextBorderStyle.roundedRect
+        tfServerUrl.borderStyle = UITextBorderStyle.roundedRect
+        tfDomain.borderStyle = UITextBorderStyle.roundedRect
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         // Check if user is logged
         let defaults = UserDefaults.standard
@@ -50,6 +57,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var tfUserName: UITextField!
     @IBOutlet weak var tfPassword: UITextField!
     @IBOutlet weak var tfServerUrl: UITextField!
+    @IBOutlet weak var tfDomain: UITextField!
     @IBOutlet weak var btnLogin: UIButton!
     
     @IBAction func btnClick(sender: UIButton) {
@@ -84,7 +92,7 @@ class ViewController: UIViewController {
                             // TODO
                             print("ERROR: Not valid URL")
                             ViewControllerUtils().hideActivityIndicator(uiView: self.container)
-                            self.view.showToast(toastMessage: "Subdominio erróneo", duration: 1.5)
+                            self.view.showToast(toastMessage: "Subdominio erróneo", duration: 2)
                         } else {
                             if let data = responseObject.data {
                                 let json = String(data: data, encoding: String.Encoding.utf8)
@@ -107,7 +115,7 @@ class ViewController: UIViewController {
         } else {
             // TODO show Bad Credentials Toast
             print("Empty fields")
-            self.view.showToast(toastMessage: "Rellene todos los campos", duration: 1.5)
+            self.view.showToast(toastMessage: "Rellene todos los campos", duration: 2)
         }
         
         
@@ -130,7 +138,7 @@ class ViewController: UIViewController {
                         // TODO
                         print("ERROR: Not valid URL")
                         ViewControllerUtils().hideActivityIndicator(uiView: self.container)
-                        self.view.showToast(toastMessage: "Subdominio erróneo", duration: 1.5)
+                        self.view.showToast(toastMessage: "Subdominio erróneo", duration: 2)
                     } else {
                         if let data = responseObject.data {
                             let json = String(data: data, encoding: String.Encoding.utf8)
@@ -147,7 +155,7 @@ class ViewController: UIViewController {
                                     ViewControllerUtils().hideActivityIndicator(uiView: self.container)
                                     self.proto = "http"
                                     self.httpsMode = false
-                                    self.view.showToast(toastMessage: "Credenciales erróneas", duration: 1.5)
+                                    self.view.showToast(toastMessage: "Credenciales erróneas", duration: 2)
                                 }
                             } else {
                                 let cookie = HTTPCookieStorage.shared.cookies![0]

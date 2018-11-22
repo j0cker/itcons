@@ -126,8 +126,8 @@ extension UIView {
         lblMessage.numberOfLines = 0
         lblMessage.lineBreakMode = .byWordWrapping
         lblMessage.textColor = .white
-//        lblMessage.backgroundColor = .black
-        lblMessage.backgroundColor = UIColorFromHex(rgbValue: 0x444444, alpha: 0.7)
+        lblMessage.backgroundColor = .black
+//        lblMessage.backgroundColor = UIColorFromHex(rgbValue: 0x444444, alpha: 0.7)
         lblMessage.textAlignment = .center
         lblMessage.font = UIFont.init(name: "Helvetica Neue", size: 17)
         lblMessage.text = toastMessage

@@ -99,7 +99,7 @@ class WebViewController: UIViewController, UIWebViewDelegate {
             defaults.set("", forKey: "ServerContext")
             self.showLoginViewController()
         } else {
-            self.view.showToast(toastMessage: "Compruebe su conexión", duration: 1.5)
+            self.view.showToast(toastMessage: "Compruebe su conexión", duration: 2)
         }
     }
     
