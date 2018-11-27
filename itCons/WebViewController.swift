@@ -10,6 +10,7 @@ import UIKit
 
 class WebViewController: UIViewController, UIWebViewDelegate {
     var serverUrl: String = ""
+    var subdomain: String = ""
     var container: UIView = UIView()
     let refreshControl: UIRefreshControl = UIRefreshControl()
     
@@ -22,12 +23,13 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         
         webView.delegate = self
         
-        if (serverUrl != nil && serverUrl != "") {
+        if (serverUrl != "") {
             let request = URLRequest(url: URL(string: serverUrl)!)
             webView.loadRequest(request)
             // Save URL value
             let defaults = UserDefaults.standard
             defaults.set(serverUrl, forKey: "ServerContext")
+            defaults.set(subdomain, forKey: "Subdomain")
         } else if (UserDefaults.standard.object(forKey:"ServerContext") as? String ?? String() != nil) {
             serverUrl = UserDefaults.standard.object(forKey:"ServerContext") as? String ?? String()
             let request = URLRequest(url: URL(string: serverUrl)!)
@@ -59,15 +61,15 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     
     func webViewDidStartLoad(_ webView: UIWebView) {
         ViewControllerUtils().showActivityIndicator(uiView: view, container: container)
-        print("WebView: LoadStart")
+//        print("WebView: LoadStart")
     }
     
     func webViewDidFinishLoad(_ webView: UIWebView) {
         ViewControllerUtils().hideActivityIndicator(uiView: container)
         //        refreshControl.endRefreshing()
-        print("WebView: LoadFinish")
+//        print("WebView: LoadFinish")
         let currentURL = self.webView.request?.mainDocumentURL?.absoluteString;
-        print("CURR_URL: \(currentURL)")
+//        print("CURR_URL: \(currentURL)")
         if (currentURL != nil && currentURL != "" && (currentURL?.contains("admin/login"))!) {
             // Save URL value
             let defaults = UserDefaults.standard
@@ -79,20 +81,9 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
         ViewControllerUtils().hideActivityIndicator(uiView: container)
         refreshControl.endRefreshing()
-//        if (serverUrl != nil && serverUrl != "") {
-//            let request = URLRequest(url: URL(string: serverUrl)!)
-//            webView.loadRequest(request)
-//            // Save URL value
-//            let defaults = UserDefaults.standard
-//            defaults.set(serverUrl, forKey: "ServerContext")
-//        } else if (UserDefaults.standard.object(forKey:"ServerContext") as? String ?? String() != nil) {
-//            serverUrl = UserDefaults.standard.object(forKey:"ServerContext") as? String ?? String()
-//            let request = URLRequest(url: URL(string: serverUrl)!)
-//            webView.loadRequest(request)
-//        }
-        print("WebView: didFailLoadWithError")
+//        print("WebView: didFailLoadWithError")
         let currentURL = self.webView.request?.mainDocumentURL?.absoluteString;
-        print("CURR_URL: \(currentURL)")
+//        print("CURR_URL: \(currentURL)")
         if (currentURL != nil && currentURL != "" && (currentURL?.contains("admin/login"))!) {
             // Save URL value
             let defaults = UserDefaults.standard
