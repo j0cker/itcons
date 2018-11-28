@@ -59,11 +59,15 @@ class ViewController: UIViewController {
     @IBOutlet weak var btnLogin: UIButton!
     
     @IBAction func btnClick(sender: UIButton) {
-        if (!(tfServerUrl.text?.isEmpty)!) {
-            checkURL(urlString: tfServerUrl.text!)
+        if (ViewControllerUtils().isConnectedToNetwork()){
+            if (!(tfServerUrl.text?.isEmpty)!) {
+                checkURL(urlString: tfServerUrl.text!)
+            } else {
+                print("Empty fields")
+                self.view.showToast(toastMessage: "Rellene todos los campos", duration: 2)
+            }
         } else {
-            print("Empty fields")
-            self.view.showToast(toastMessage: "Rellene todos los campos", duration: 2)
+            self.view.showToast(toastMessage: "Compruebe su conexión", duration: 2)
         }
     }
     
@@ -101,8 +105,8 @@ class ViewController: UIViewController {
                 } else {
                     // HTTPS
                     if let httpResponse = response as? HTTPURLResponse {
-//                        print(httpResponse.statusCode)
-//                        if (httpResponse.statusCode == 200) {
+                        //                        print(httpResponse.statusCode)
+                        //                        if (httpResponse.statusCode == 200) {
                         if (200...499 ~= httpResponse.statusCode) {
                             self.proto = "https"
                             self.cookieRequest(url: self.tfServerUrl.text!, credentials: [self.tfUserName.text!, self.tfPassword.text!])
