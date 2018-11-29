@@ -128,6 +128,7 @@
 				TargetAttributes = {
 					04797A5921786203003D0194 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 9T3WN4Q5H6;
 						ProvisioningStyle = Manual;
 					};
 				};
@@ -333,7 +334,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Paul Gurmendi (563DMB8B44)";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 9T3WN4Q5H6;
 				INFOPLIST_FILE = ItCons/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.innovaciontecnologiaconsultoria.itcons;
@@ -350,7 +351,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: INNOVACION TECNOLOGIA Y CONSULTORIA SL (9T3WN4Q5H6)";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 9T3WN4Q5H6;
 				INFOPLIST_FILE = ItCons/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.innovaciontecnologiaconsultoria.itcons;

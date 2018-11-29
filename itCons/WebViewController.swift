@@ -61,19 +61,20 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     
     func webViewDidStartLoad(_ webView: UIWebView) {
         ViewControllerUtils().showActivityIndicator(uiView: view, container: container)
-//        print("WebView: LoadStart")
+        //        print("WebView: LoadStart")
     }
     
     func webViewDidFinishLoad(_ webView: UIWebView) {
         ViewControllerUtils().hideActivityIndicator(uiView: container)
         //        refreshControl.endRefreshing()
-//        print("WebView: LoadFinish")
+        //        print("WebView: LoadFinish")
         let currentURL = self.webView.request?.mainDocumentURL?.absoluteString;
-//        print("CURR_URL: \(currentURL)")
+        //        print("CURR_URL: \(currentURL)")
         if (currentURL != nil && currentURL != "" && (currentURL?.contains("admin/login"))!) {
-            // Save URL value
+            removeCookies()
             let defaults = UserDefaults.standard
             defaults.set("", forKey: "ServerContext")
+            defaults.removeObject(forKey:"cookie")
             self.showLoginViewController()
         }
     }
@@ -81,13 +82,14 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
         ViewControllerUtils().hideActivityIndicator(uiView: container)
         refreshControl.endRefreshing()
-//        print("WebView: didFailLoadWithError")
+        //        print("WebView: didFailLoadWithError")
         let currentURL = self.webView.request?.mainDocumentURL?.absoluteString;
-//        print("CURR_URL: \(currentURL)")
+        //        print("CURR_URL: \(currentURL)")
         if (currentURL != nil && currentURL != "" && (currentURL?.contains("admin/login"))!) {
-            // Save URL value
+            removeCookies()
             let defaults = UserDefaults.standard
             defaults.set("", forKey: "ServerContext")
+            defaults.removeObject(forKey:"cookie")
             self.showLoginViewController()
         } else {
             self.view.showToast(toastMessage: "Compruebe su conexión", duration: 2)
@@ -113,6 +115,13 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         let viewController = UIStoryboard(name: "Main", bundle: nil)
             .instantiateViewController(withIdentifier: "ViewController") as! ViewController
         self.present(viewController, animated: false, completion: nil)
+    }
+    
+    func removeCookies() {
+        let storage = HTTPCookieStorage.shared
+        for cookie in storage.cookies! {
+            storage.deleteCookie(cookie)
+        }
     }
     
     

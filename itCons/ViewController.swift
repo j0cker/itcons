@@ -46,6 +46,7 @@ class ViewController: UIViewController {
             if (subdomain != "") {
                 tfServerUrl.text = subdomain
             }
+//            removeCookies()
         }
     }
     
@@ -61,7 +62,7 @@ class ViewController: UIViewController {
     @IBAction func btnClick(sender: UIButton) {
         if (ViewControllerUtils().isConnectedToNetwork()){
             if (!(tfServerUrl.text?.isEmpty)!) {
-                checkURL(urlString: tfServerUrl.text!)
+                checkURL(urlString: tfServerUrl.text!, user: tfUserName.text!, pass: tfPassword.text!)
             } else {
                 print("Empty fields")
                 self.view.showToast(toastMessage: "Rellene todos los campos", duration: 2)
@@ -79,7 +80,7 @@ class ViewController: UIViewController {
     
     
     
-    func checkURL(urlString: String){
+    func checkURL(urlString: String, user: String, pass: String) {
         
         if (!(tfUserName.text?.isEmpty)! && !(tfPassword.text?.isEmpty)!) {
             
@@ -101,7 +102,7 @@ class ViewController: UIViewController {
                 if (error != nil) {
                     // HTTP
                     self.proto = "http"
-                    self.cookieRequest(url: self.tfServerUrl.text!, credentials: [self.tfUserName.text!, self.tfPassword.text!])
+                    self.cookieRequest(url: urlString, credentials: [user, pass])
                 } else {
                     // HTTPS
                     if let httpResponse = response as? HTTPURLResponse {
@@ -109,7 +110,7 @@ class ViewController: UIViewController {
                         //                        if (httpResponse.statusCode == 200) {
                         if (200...499 ~= httpResponse.statusCode) {
                             self.proto = "https"
-                            self.cookieRequest(url: self.tfServerUrl.text!, credentials: [self.tfUserName.text!, self.tfPassword.text!])
+                            self.cookieRequest(url: urlString, credentials: [user, pass])
                         } else {
                             self.view.showToast(toastMessage: "No pudo conectarse con el servidor", duration: 2)
                         }
@@ -218,6 +219,13 @@ class ViewController: UIViewController {
         }
         self.present(viewController, animated: false, completion: nil)
     }
+    
+//    func removeCookies() {
+//        let storage = HTTPCookieStorage.shared
+//        for cookie in storage.cookies! {
+//            storage.deleteCookie(cookie)
+//        }
+//    }
     
     
     
