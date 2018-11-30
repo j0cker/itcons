@@ -112,15 +112,33 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     }
     
     func showLoginViewController() {
-        let viewController = UIStoryboard(name: "Main", bundle: nil)
-            .instantiateViewController(withIdentifier: "ViewController") as! ViewController
-        self.present(viewController, animated: false, completion: nil)
+//        let viewController = UIStoryboard(name: "Main", bundle: nil)
+//            .instantiateViewController(withIdentifier: "ViewController") as! ViewController
+////        self.present(viewController, animated: false, completion: nil)
+//        self.present(viewController, animated: false, completion: {
+            self.dismiss(animated: false, completion: nil)
+//        })
     }
     
     func removeCookies() {
         let storage = HTTPCookieStorage.shared
         for cookie in storage.cookies! {
             storage.deleteCookie(cookie)
+        }
+    }
+    
+    override func dismiss(animated flag: Bool, completion: (() -> Void)?) {
+        let currentURL = self.webView.request?.mainDocumentURL?.absoluteString;
+        if (self.presentedViewController != nil && !(currentURL?.contains("admin/login"))!) {
+            super.dismiss(animated: flag, completion: completion)
+        } else if ((currentURL?.contains("admin/login"))!) {
+            removeCookies()
+            let defaults = UserDefaults.standard
+            defaults.set("", forKey: "ServerContext")
+            defaults.removeObject(forKey:"cookie")
+            let viewController = UIStoryboard(name: "Main", bundle: nil)
+                .instantiateViewController(withIdentifier: "ViewController") as! ViewController
+            self.present(viewController, animated: false, completion: nil)
         }
     }
     

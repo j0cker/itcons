@@ -46,7 +46,6 @@ class ViewController: UIViewController {
             if (subdomain != "") {
                 tfServerUrl.text = subdomain
             }
-//            removeCookies()
         }
     }
     
@@ -217,17 +216,8 @@ class ViewController: UIViewController {
             viewController.serverUrl = serverUrl
             viewController.subdomain = subdomain
         }
-        self.present(viewController, animated: false, completion: nil)
+        self.present(viewController, animated: false, completion: nil)  
     }
-    
-//    func removeCookies() {
-//        let storage = HTTPCookieStorage.shared
-//        for cookie in storage.cookies! {
-//            storage.deleteCookie(cookie)
-//        }
-//    }
-    
-    
     
 }
 

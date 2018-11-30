@@ -47,5 +47,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>Itcons desea acceder a la cámara</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Itcons desea acceder a la galería</string>
 </dict>
 </plist>
