@@ -112,11 +112,11 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     }
     
     func showLoginViewController() {
-//        let viewController = UIStoryboard(name: "Main", bundle: nil)
-//            .instantiateViewController(withIdentifier: "ViewController") as! ViewController
-////        self.present(viewController, animated: false, completion: nil)
+        let viewController = UIStoryboard(name: "Main", bundle: nil)
+            .instantiateViewController(withIdentifier: "ViewController") as! ViewController
+        self.present(viewController, animated: false, completion: nil)
 //        self.present(viewController, animated: false, completion: {
-            self.dismiss(animated: false, completion: nil)
+//            self.dismiss(animated: false, completion: nil)
 //        })
     }
     

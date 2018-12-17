@@ -39,8 +39,14 @@ class ViewController: UIViewController {
         // Check if user is logged
         let defaults = UserDefaults.standard
         let serverContext = defaults.object(forKey:"ServerContext") as? String ?? String()
-        if (serverContext != "") {
-            perform(#selector(showWebViewController), with: nil, afterDelay: 1)
+        let subdomainContext = defaults.object(forKey:"Subdomain") as? String ?? String()
+        if (serverContext != "" && subdomainContext != "") {
+//            perform(#selector(showWebViewController), with: nil, afterDelay: 1)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+                self.showWebViewController(serverUrl: serverContext, subdomain: subdomainContext)
+            })
+            
         } else {
             let subdomain = defaults.object(forKey:"Subdomain") as? String ?? String()
             if (subdomain != "") {
@@ -203,13 +209,14 @@ class ViewController: UIViewController {
                                 ViewControllerUtils().hideActivityIndicator(uiView: self.container)
                             }
                         }
+                        
                     }
                 }
         }
         
     }
     
-    @objc func showWebViewController(serverUrl : String, subdomain : String) {
+    func showWebViewController(serverUrl : String, subdomain : String) {
         let viewController = UIStoryboard(name: "Main", bundle: nil)
             .instantiateViewController(withIdentifier: "WebViewController") as! WebViewController
         if (serverUrl != "") {
