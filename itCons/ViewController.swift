@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     var username: String = ""
     var password: String = ""
     var url: String = ""
+    var urlExt: String = ""
     var proto: String = ""
     var access: Bool = false
     var container: UIView = UIView()
@@ -40,11 +41,12 @@ class ViewController: UIViewController {
         let defaults = UserDefaults.standard
         let serverContext = defaults.object(forKey:"ServerContext") as? String ?? String()
         let subdomainContext = defaults.object(forKey:"Subdomain") as? String ?? String()
-        if (serverContext != "" && subdomainContext != "") {
+        let urlExt = defaults.object(forKey:"urlExt") as? String ?? String()
+        if (serverContext != "" && subdomainContext != "" && urlExt != "") {
 //            perform(#selector(showWebViewController), with: nil, afterDelay: 1)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-                self.showWebViewController(serverUrl: serverContext, subdomain: subdomainContext)
+                self.showWebViewController(serverUrl: serverContext, subdomain: subdomainContext, urlExt: urlExt)
             })
             
         } else {
@@ -62,12 +64,16 @@ class ViewController: UIViewController {
     @IBOutlet weak var tfPassword: UITextField!
     @IBOutlet weak var tfServerUrl: UITextField!
     @IBOutlet weak var tfDomain: UITextField!
+    @IBOutlet weak var tfExt: UITextField!
     @IBOutlet weak var btnLogin: UIButton!
     
     @IBAction func btnClick(sender: UIButton) {
         if (ViewControllerUtils().isConnectedToNetwork()){
             if (!(tfServerUrl.text?.isEmpty)!) {
-                checkURL(urlString: tfServerUrl.text!, user: tfUserName.text!, pass: tfPassword.text!)
+                
+                urlExt = "es"
+                checkURL(urlString: tfServerUrl.text!, urlExt: urlExt, user: tfUserName.text!, pass: tfPassword.text!)
+                
             } else {
                 print("Empty fields")
                 self.view.showToast(toastMessage: "Rellene todos los campos", duration: 2)
@@ -85,14 +91,14 @@ class ViewController: UIViewController {
     
     
     
-    func checkURL(urlString: String, user: String, pass: String) {
+    func checkURL(urlString: String, urlExt: String, user: String, pass: String) {
         
         if (!(tfUserName.text?.isEmpty)! && !(tfPassword.text?.isEmpty)!) {
             
             ViewControllerUtils().showActivityIndicator(uiView: self.view, container: container)
             
             // Set up the URL request
-            let fullUrl = "https://\(urlString).itcons.es/admin/login"
+            let fullUrl = "https://\(urlString).itcons.\(urlExt)/admin/login"
             let url = URL(string: fullUrl)
             let urlRequest = URLRequest(url: url!)
             
@@ -107,7 +113,14 @@ class ViewController: UIViewController {
                 if (error != nil) {
                     // HTTP
                     self.proto = "http"
-                    self.cookieRequest(url: urlString, credentials: [user, pass])
+                    self.cookieRequest(completion: { (data, success) in
+                        
+                        if(success == "FALSE" && self.urlExt == "es"){
+                            self.urlExt = "app"
+                            self.checkURL(urlString: self.tfServerUrl.text!, urlExt: self.urlExt, user: self.tfUserName.text!, pass: self.tfPassword.text!)
+                        }
+                        
+                    }, url: urlString, urlExt: urlExt, credentials: [user, pass])
                 } else {
                     // HTTPS
                     if let httpResponse = response as? HTTPURLResponse {
@@ -115,7 +128,15 @@ class ViewController: UIViewController {
                         //                        if (httpResponse.statusCode == 200) {
                         if (200...499 ~= httpResponse.statusCode) {
                             self.proto = "https"
-                            self.cookieRequest(url: urlString, credentials: [user, pass])
+                            self.cookieRequest(completion: { (data, success) in
+                                
+                                if(success == "FALSE" && self.urlExt == "es"){
+                                    self.urlExt = "app"
+                                    self.checkURL(urlString: self.tfServerUrl.text!, urlExt: self.urlExt, user: self.tfUserName.text!, pass: self.tfPassword.text!)
+                                }
+                                
+                            }, url: urlString, urlExt: urlExt, credentials: [user, pass])
+                        
                         } else {
                             self.view.showToast(toastMessage: "No pudo conectarse con el servidor", duration: 2)
                         }
@@ -132,14 +153,16 @@ class ViewController: UIViewController {
     }
     
     
-    func cookieRequest(url: String, credentials: [String]) {
+    func cookieRequest(completion: @escaping ([Any]?, String) ->Void, url: String, urlExt: String, credentials: [String]) {
+        
         print("CookieRequest")
+        
         let params = [
             "_username": credentials[0],
             "_password": credentials[1]
         ]
         
-        Alamofire.request("\(self.proto)://\(url).itcons.es/admin/login_check",
+        Alamofire.request("\(self.proto)://\(url).itcons.\(urlExt)/admin/login_check",
             method: .post,
             parameters: params,
             encoding: URLEncoding.default)
@@ -150,7 +173,12 @@ class ViewController: UIViewController {
                         // TODO
                         print("ERROR: Not valid URL")
                         ViewControllerUtils().hideActivityIndicator(uiView: self.container)
+                        
+                        
                         self.view.showToast(toastMessage: "Subdominio erróneo", duration: 2)
+                        
+                        completion(nil, "FALSE")
+                        
                     } else {
                         if let data = responseObject.data {
                             let json = String(data: data, encoding: String.Encoding.utf8)
@@ -158,12 +186,15 @@ class ViewController: UIViewController {
                                 (json?.contains("Your session has timed out"))! ||
                                 (json?.contains("¿Has olvidado la contraseña?"))!){
                                 print("PHPSESSID: Bad credentials");
-                                self.retry(url: url, credentials: credentials)
+                                self.retry(url: url, urlExt: urlExt, credentials: credentials)
+                                completion(nil, "FALSE")
+                                
                             } else {
                                 let cookie = HTTPCookieStorage.shared.cookies![0]
                                 print("PHPSESSID: \(cookie.value)")
-                                self.showWebViewController(serverUrl: "\(self.proto)://\(url).itcons.es", subdomain: url)
+                                self.showWebViewController(serverUrl: "\(self.proto)://\(url).itcons.\(urlExt)", subdomain: url, urlExt: urlExt)
                                 ViewControllerUtils().hideActivityIndicator(uiView: self.container)
+                                completion(nil, "TRUE")
                             }
                         }
                     }
@@ -173,14 +204,14 @@ class ViewController: UIViewController {
         
     }
     
-    func retry(url: String, credentials: [String]) {
+    func retry(url: String, urlExt: String, credentials: [String]) {
         print("Retry")
         let params = [
             "_username": credentials[0],
             "_password": credentials[1]
         ]
         
-        Alamofire.request("\(self.proto)://\(url).itcons.es/admin/login_check",
+        Alamofire.request("\(self.proto)://\(url).itcons.\(urlExt)/admin/login_check",
             method: .post,
             parameters: params,
             encoding: URLEncoding.default)
@@ -205,7 +236,7 @@ class ViewController: UIViewController {
                             } else {
                                 let cookie = HTTPCookieStorage.shared.cookies![0]
                                 print("PHPSESSID: \(cookie.value)")
-                                self.showWebViewController(serverUrl: "\(self.proto)://\(url).itcons.es", subdomain: url)
+                                self.showWebViewController(serverUrl: "\(self.proto)://\(url).itcons.\(urlExt)", subdomain: url, urlExt: urlExt)
                                 ViewControllerUtils().hideActivityIndicator(uiView: self.container)
                             }
                         }
@@ -216,12 +247,13 @@ class ViewController: UIViewController {
         
     }
     
-    func showWebViewController(serverUrl : String, subdomain : String) {
+    func showWebViewController(serverUrl : String, subdomain : String, urlExt: String) {
         let viewController = UIStoryboard(name: "Main", bundle: nil)
             .instantiateViewController(withIdentifier: "WebViewController") as! WebViewController
         if (serverUrl != "") {
             viewController.serverUrl = serverUrl
             viewController.subdomain = subdomain
+            viewController.urlExt = urlExt
         }
         self.present(viewController, animated: false, completion: nil)  
     }

@@ -11,6 +11,7 @@ import UIKit
 class WebViewController: UIViewController, UIWebViewDelegate {
     var serverUrl: String = ""
     var subdomain: String = ""
+    var urlExt: String = ""
     var container: UIView = UIView()
     let refreshControl: UIRefreshControl = UIRefreshControl()
     
@@ -30,6 +31,7 @@ class WebViewController: UIViewController, UIWebViewDelegate {
             let defaults = UserDefaults.standard
             defaults.set(serverUrl, forKey: "ServerContext")
             defaults.set(subdomain, forKey: "Subdomain")
+            defaults.set(urlExt, forKey: "urlExt")
         } else if (UserDefaults.standard.object(forKey:"ServerContext") as? String ?? String() != nil) {
             serverUrl = UserDefaults.standard.object(forKey:"ServerContext") as? String ?? String()
             let request = URLRequest(url: URL(string: serverUrl)!)
@@ -99,7 +101,7 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     // Forbid external links
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         let requestURL = request.mainDocumentURL?.absoluteString;
-        if (!(requestURL?.contains(".itcons.es"))!) {
+        if (!(requestURL?.contains(".itcons.\(urlExt)"))!) {
             return false
         }
         return true
