@@ -71,8 +71,7 @@ class ViewController: UIViewController {
         if (ViewControllerUtils().isConnectedToNetwork()){
             if (!(tfServerUrl.text?.isEmpty)!) {
                 
-                urlExt = "es"
-                checkURL(urlString: tfServerUrl.text!, urlExt: urlExt, user: tfUserName.text!, pass: tfPassword.text!)
+                checkURL(option: 1, urlString: tfServerUrl.text!, user: tfUserName.text!, pass: tfPassword.text!)
                 
             } else {
                 print("Empty fields")
@@ -91,14 +90,39 @@ class ViewController: UIViewController {
     
     
     
-    func checkURL(urlString: String, urlExt: String, user: String, pass: String) {
+    func checkURL(option: Int, urlString: String, user: String, pass: String) {
+        
+        if(option==1){
+            print("Option 1");
+            self.urlExt = "es"
+            self.proto = "http"
+        }
+        if(option==2){
+            print("Option 2");
+            
+            self.urlExt = "es"
+            self.proto = "https"
+        }
+        if(option==3){
+            print("Option 3");
+            
+            self.urlExt = "app"
+            self.proto = "http"
+        }
+        if(option==4){
+            print("Option 4");
+            
+            self.urlExt = "app"
+            self.proto = "https"
+        }
+        
         
         if (!(tfUserName.text?.isEmpty)! && !(tfPassword.text?.isEmpty)!) {
             
             ViewControllerUtils().showActivityIndicator(uiView: self.view, container: container)
             
             // Set up the URL request
-            let fullUrl = "https://\(urlString).itcons.\(urlExt)/admin/login"
+            let fullUrl = "\(self.proto)://\(urlString).itcons.\(urlExt)/admin/login"
             let url = URL(string: fullUrl)
             let urlRequest = URLRequest(url: url!)
             
@@ -112,30 +136,45 @@ class ViewController: UIViewController {
                 // check for any errors on HTTPS protocol
                 if (error != nil) {
                     // HTTP
-                    self.proto = "http"
+                    print("http");
                     self.cookieRequest(completion: { (data, success) in
                         
-                        if(success == "FALSE" && self.urlExt == "es"){
-                            self.urlExt = "app"
-                            self.checkURL(urlString: self.tfServerUrl.text!, urlExt: self.urlExt, user: self.tfUserName.text!, pass: self.tfPassword.text!)
+                        
+                        if(success == "FALSE"){
+                            
+                            
+                            
                         }
                         
-                    }, url: urlString, urlExt: urlExt, credentials: [user, pass])
+                    }, url: urlString, urlExt: self.urlExt, credentials: [user, pass])
                 } else {
                     // HTTPS
+                    print("https");
                     if let httpResponse = response as? HTTPURLResponse {
                         //                        print(httpResponse.statusCode)
                         //                        if (httpResponse.statusCode == 200) {
                         if (200...499 ~= httpResponse.statusCode) {
-                            self.proto = "https"
                             self.cookieRequest(completion: { (data, success) in
-                                
-                                if(success == "FALSE" && self.urlExt == "es"){
-                                    self.urlExt = "app"
-                                    self.checkURL(urlString: self.tfServerUrl.text!, urlExt: self.urlExt, user: self.tfUserName.text!, pass: self.tfPassword.text!)
+      
+                                if(success == "FALSE"){
+                                    
+                                    if(self.urlExt == "es" && self.proto == "http"){
+                                        
+                                        print("https 1", self.urlExt, self.proto );
+                                        self.checkURL(option: 2, urlString: self.tfServerUrl.text!,user: self.tfUserName.text!, pass: self.tfPassword.text!)
+                                    } else if (self.urlExt == "es" && self.proto == "https"){
+                                        
+                                        print("https 2", self.urlExt, self.proto );
+                                        self.checkURL(option: 3, urlString: self.tfServerUrl.text!,user: self.tfUserName.text!, pass: self.tfPassword.text!)
+                                    } else if (self.urlExt == "app" && self.proto == "http"){
+                                        
+                                        print("http 1", self.urlExt, self.proto );
+                                        self.checkURL(option: 4, urlString: self.tfServerUrl.text!,user: self.tfUserName.text!, pass: self.tfPassword.text!)
+                                    }
+                                    
                                 }
-                                
-                            }, url: urlString, urlExt: urlExt, credentials: [user, pass])
+ 
+                            }, url: urlString, urlExt: self.urlExt, credentials: [user, pass])
                         
                         } else {
                             self.view.showToast(toastMessage: "No pudo conectarse con el servidor", duration: 2)
@@ -161,6 +200,13 @@ class ViewController: UIViewController {
             "_username": credentials[0],
             "_password": credentials[1]
         ]
+        
+        print("Se revisa:");
+        print("Proto: ", self.proto);
+        print("URL: " , url);
+        print("urlExt: " , urlExt);
+        print("_username: " , credentials[0]);
+        print("_password: " , credentials[1]);
         
         Alamofire.request("\(self.proto)://\(url).itcons.\(urlExt)/admin/login_check",
             method: .post,

@@ -24,8 +24,17 @@
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
+		<key>NSAllowsArbitraryLoadsInWebContent</key>
+		<false/>
 		<key>NSExceptionDomains</key>
 		<dict>
+			<key>itcons.app</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
 			<key>itcons.es</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
