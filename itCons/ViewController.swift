@@ -159,7 +159,7 @@ class ViewController: UIViewController {
                                 if(success == "FALSE"){
                                     
                                     if(self.urlExt == "es" && self.proto == "http"){
-                                        
+
                                         print("https 1", self.urlExt, self.proto );
                                         self.checkURL(option: 2, urlString: self.tfServerUrl.text!,user: self.tfUserName.text!, pass: self.tfPassword.text!)
                                     } else if (self.urlExt == "es" && self.proto == "https"){
